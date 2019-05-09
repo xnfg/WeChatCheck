@@ -1,0 +1,34 @@
+#项目的启动端口
+server.port=443
+#让springboot支持https
+server.ssl.key-store = classpath:aali.p12
+server.ssl.key-store-password = abcabc
+server.ssl.keyStoreType= PKCS12
+server.ssl.keyAlias= 1
+#日志框架的配置
+logging.config= classpath:logback.xml
+#redis的相关配置，前后端分离没有session，Redis可以充当缓存session
+spring.redis.database= 0
+spring.redis.host= 192.168.2.222
+spring.redis.port= 6379
+spring.redis.password= 123456A
+spring.redis.pool.max-active=8
+spring.redis.pool.max-wait= -1
+spring.redis.pool.max-idle= 8
+spring.redis.pool.min-idle= 0
+spring.redis.timeout= 0
+#配置数据源信息
+#开发环境
+spring.datasource.url= jdbc:mysql://cdb-5g9614iu.cd.tencentcdb.com:10025/appletForWeChat?characterEncoding=utf8&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=Asia/Shanghai
+spring.datasource.username= root
+spring.datasource.password= hjy0516A
+#生产环境
+#spring.datasource.url= jdbc:mysql://www.fy2018.online:3303/appletForWeChat?characterEncoding=utf8&useSSL=false&createDatabaseIfNotExist=true
+#spring.datasource.username= root
+#spring.datasource.password= 123456
+
+#ftp相关配置
+ftp.server.username=lemon
+ftp.server.password=123456
+ftp.server.host=www.fy2018.online
+ftp.server.dir=/ftpfile

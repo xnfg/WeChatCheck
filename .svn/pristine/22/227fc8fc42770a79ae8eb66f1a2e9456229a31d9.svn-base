@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.school.wechat.wechatserver.api.base.mapper.MessageMapper" >
+  <resultMap id="BaseResultMap" type="com.school.wechat.wechatserver.api.base.model.Message" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="message_number" property="messageNumber" jdbcType="INTEGER" />
+    <result column="show" property="show" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="job_info_number" property="jobInfoNumber" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="student_number" property="studentNumber" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, message_number, show, content, job_info_number, create_time, student_number
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from message
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectMessage" resultType="com.school.wechat.wechatserver.api.base.model.vo.MessageModel">
+    SELECT
+	content AS Msg,
+	oder_number AS msgId,
+	m.create_time AS time
+FROM
+	message m
+	LEFT JOIN oder_details details ON m.student_number = details.student_number
+WHERE
+	m.student_number = #{openID}
+	AND m.show=0
+	ORDER BY m.create_time desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from message
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.school.wechat.wechatserver.api.base.model.Message" >
+    insert into message (id, message_number, show, 
+      content, job_info_number, create_time, 
+      student_number)
+    values (#{id,jdbcType=INTEGER}, #{messageNumber,jdbcType=INTEGER}, #{show,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{jobInfoNumber,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{studentNumber,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.school.wechat.wechatserver.api.base.model.Message" >
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="messageNumber != null" >
+        message_number,
+      </if>
+      <if test="show != null" >
+        show,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="jobInfoNumber != null" >
+        job_info_number,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="studentNumber != null" >
+        student_number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="messageNumber != null" >
+        #{messageNumber,jdbcType=INTEGER},
+      </if>
+      <if test="show != null" >
+        #{show,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="jobInfoNumber != null" >
+        #{jobInfoNumber,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="studentNumber != null" >
+        #{studentNumber,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.school.wechat.wechatserver.api.base.model.Message" >
+    update message
+    <set >
+      <if test="messageNumber != null" >
+        message_number = #{messageNumber,jdbcType=INTEGER},
+      </if>
+      <if test="show != null" >
+        show = #{show,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="jobInfoNumber != null" >
+        job_info_number = #{jobInfoNumber,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="studentNumber != null" >
+        student_number = #{studentNumber,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.school.wechat.wechatserver.api.base.model.Message" >
+    update message
+    set message_number = #{messageNumber,jdbcType=INTEGER},
+      show = #{show,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      job_info_number = #{jobInfoNumber,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      student_number = #{studentNumber,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <update id="outMessage"  parameterType="com.school.wechat.wechatserver.api.base.model.Message">
+      UPDATE message set `show`=1 where message_number=#{id} and student_number={openID}
+    </update>
+</mapper>

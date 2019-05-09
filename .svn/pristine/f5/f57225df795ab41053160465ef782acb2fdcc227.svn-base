@@ -1,0 +1,17 @@
+####################################
+###########测试环境##################
+####################################
+#配置公众号内的模板消息的id
+wechar.template=wG5kxNFKZdnJ2v6Yc5E0aqAH9EMvlxIZn4Px0alJAC4
+#配置服务器的token
+wechar.token=lemon
+#配置开发者的编号
+wechar.appID=wxd442e56fe26eba13
+#配置开发者的密码
+wechar.appSecret=0d3a166379b3f8fa006dd72f97dec951
+#点击模板跳转的地址
+wechar.url=
+#授权回调地址
+wechar.redirectUri=
+# 公众号前端url：
+wechar.weixinUrl=
